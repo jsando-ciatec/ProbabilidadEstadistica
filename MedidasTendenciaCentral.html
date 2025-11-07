@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía: Medidas de Tendencia Central</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #F5F5F7;
+        color: #1a202c;
+      }
+      .chart-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 300px;
+        max-height: 400px;
+      }
+      @media (min-width: 768px) {
+        .chart-container {
+          height: 350px;
+        }
+      }
+      h1 { color: #004A99; }
+      h2 { color: #004A99; }
+      .text-accent { color: #007BFF; }
+      .bg-primary { background-color: #004A99; }
+      .bg-accent { background-color: #007BFF; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto max-w-6xl p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Medidas de Tendencia Central</h1>
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto">
+                Una exploración visual de la Media, Mediana y Moda, los parámetros estadísticos que resumen dónde se encuentra el "centro" de un conjunto de datos.
+            </p>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-[#007BFF]">
+                <h3 class="text-2xl font-bold mb-2 text-accent">Media (Promedio)</h3>
+                <p class="text-gray-600 mb-2"><strong>Describe:</strong> El "centro de gravedad" de los datos.</p>
+                <p class="text-gray-600 mb-2"><strong>Nivel de Medición:</strong> Métrica.</p>
+                <p class="text-gray-600"><strong>Robustez:</strong> Baja (sensible a valores atípicos).</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-[#34C759]">
+                <h3 class="text-2xl font-bold mb-2 text-[#34C759]">Mediana (Valor Central)</h3>
+                <p class="text-gray-600 mb-2"><strong>Describe:</strong> El valor que divide la serie en dos mitades.</p>
+                <p class="text-gray-600 mb-2"><strong>Nivel de Medición:</strong> Ordinal o Métrica.</p>
+                <p class="text-gray-600"><strong>Robustez:</strong> Alta (no sensible a valores atípicos).</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-[#FF9500]">
+                <h3 class="text-2xl font-bold mb-2 text-[#FF9500]">Moda (Valor Típico)</h3>
+                <p class="text-gray-600 mb-2"><strong>Describe:</strong> El valor más frecuente en la distribución.</p>
+                <p class="text-gray-600 mb-2"><strong>Nivel de Medición:</strong> Nominal, Ordinal o Métrica.</p>
+                <p class="text-gray-600"><strong>Robustez:</strong> Alta.</p>
+            </div>
+        </section>
+
+        <main class="space-y-12">
+
+            <article class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h2 class="text-3xl font-bold mb-4">1. La Media (Promedio)</h2>
+                <p class="text-gray-700 mb-6 max-w-4xl">
+                    La Media Aritmética, o promedio, es la medida más común. Indica el "centro de gravedad" de la distribución. Se calcula sumando todos los valores y dividiendo por la cantidad total de valores. Sin embargo, su principal desventaja es que es muy sensible a valores extremos.
+                </p>
+                <div class="chart-container mb-6">
+                    <canvas id="mediaChart"></canvas>
+                </div>
+                <div class="text-center">
+                    <p class="text-gray-700 text-lg">
+                        En el ejemplo, 5 estudiantes consumen tazas de café. La media nos da un valor central.
+                    </p>
+                    <p class="text-xl font-bold text-accent mt-2">
+                        (21 + 25 + 10 + 8 + 11) / 5 = 15 tazas
+                    </p>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h2 class="text-3xl font-bold mb-4">2. La Mediana (Valor Central)</h2>
+                <p class="text-gray-700 mb-6 max-w-4xl">
+                    La Mediana es el valor que se encuentra exactamente en el centro de los datos, una vez que estos han sido ordenados. Es una medida "robusta", lo que significa que los valores atípicos (muy altos o muy bajos) no la afectan. Para encontrarla, primero se ordenan los datos.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Usando los datos del ejemplo comparativo de 10 estudiantes, primero los ordenamos:
+                </p>
+                <div class="flex flex-wrap justify-center gap-2 mb-6 text-center font-medium">
+                    <span class="p-3 rounded-md bg-gray-200">4</span>
+                    <span class="p-3 rounded-md bg-gray-200">5</span>
+                    <span class="p-3 rounded-md bg-gray-200">5</span>
+                    <span class="p-3 rounded-md bg-gray-200">8</span>
+                    <span class="p-3 rounded-md bg-blue-200 text-blue-800 border-2 border-blue-500">9</span>
+                    <span class="p-3 rounded-md bg-blue-200 text-blue-800 border-2 border-blue-500">12</span>
+                    <span class="p-3 rounded-md bg-gray-200">14</span>
+                    <span class="p-3 rounded-md bg-gray-200">16</span>
+                    <span class="p-3 rounded-md bg-gray-200">17</span>
+                    <span class="p-3 rounded-md bg-gray-200">20</span>
+                </div>
+                <div class="text-center">
+                    <p class="text-gray-700 text-lg">
+                        Como (n) es par (10), la mediana es el promedio de los dos valores centrales (9 y 12).
+                    </p>
+                    <p class="text-xl font-bold text-[#34C759] mt-2">
+                        (9 + 12) / 2 = 10.5
+                    </p>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h2 class="text-3xl font-bold mb-4">3. La Moda (Valor Típico)</h2>
+                <p class="text-gray-700 mb-6 max-w-4xl">
+                    La Moda es simplemente el valor más frecuente en el conjunto de datos. Es la única medida de tendencia central que se puede utilizar con datos nominales (categóricos). Un conjunto de datos puede tener más de una moda (bimodal o multimodal).
+                </p>
+                <div class="chart-container mb-6">
+                    <canvas id="modaChart"></canvas>
+                </div>
+                <div class="text-center">
+                    <p class="text-gray-700 text-lg">
+                        En el ejemplo de marcas de coche, la moda es la marca que aparece con más frecuencia.
+                    </p>
+                    <p class="text-xl font-bold text-[#FF9500] mt-2">
+                        La Moda es "BMW" (25 ocurrencias)
+                    </p>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h2 class="text-3xl font-bold mb-4">Análisis Comparativo: Puntuaciones de 10 Estudiantes</h2>
+                <p class="text-gray-700 mb-6 max-w-4xl">
+                    Visualicemos los datos de las puntuaciones de 10 estudiantes. Este gráfico de dispersión muestra cada puntuación individual y traza líneas para la Media, Mediana y Moda calculadas. Observe cómo las tres medidas pueden diferir, dándonos una imagen más completa de la distribución de los datos.
+                </p>
+                <div class="chart-container mb-6">
+                    <canvas id="comparativeChart"></canvas>
+                </div>
+                <div class="flex flex-wrap justify-center gap-4 text-center">
+                    <div class="p-4 rounded-md bg-green-100">
+                        <span class="text-lg font-semibold text-green-800">Media: 11</span>
+                    </div>
+                    <div class="p-4 rounded-md bg-orange-100">
+                        <span class="text-lg font-semibold text-orange-800">Mediana: 10.5</span>
+                    </div>
+                    <div class="p-4 rounded-md bg-red-100">
+                        <span class="text-lg font-semibold text-red-800">Moda: 5</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h2 class="text-3xl font-bold mb-4">Ventajas y Desventajas</h2>
+                <p class="text-gray-700 mb-6">
+                    Cada medida tiene sus fortalezas. La elección de cuál usar depende del nivel de medición de sus datos y de la forma de su distribución (especialmente si hay valores atípicos).
+                </p>
+                <div class="overflow-x-auto">
+                    <table class="w-full min-w-full text-left border-collapse">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="p-4 border-b-2 border-gray-300 font-bold text-gray-700">Medida</th>
+                                <th class="p-4 border-b-2 border-gray-300 font-bold text-gray-700">Ventajas</th>
+                                <th class="p-4 border-b-2 border-gray-300 font-bold text-gray-700">Desventajas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 border-b border-gray-200 font-medium text-accent">Media</td>
+                                <td class="p-4 border-b border-gray-200">La más utilizada en inferencia; toma en cuenta todos los valores.</td>
+                                <td class="p-4 border-b border-gray-200">Sensible a valores atípicos.</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 border-b border-gray-200 font-medium text-[#34C759]">Mediana</td>
+                                <td class="p-4 border-b border-gray-200">Muy robusta a valores atípicos; solo requiere escala ordinal.</td>
+                                <td class="p-4 border-b border-gray-200">No considera todos los valores de la distribución.</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 border-b border-gray-200 font-medium text-[#FF9500]">Moda</td>
+                                <td class="p-4 border-b border-gray-200">Puede usarse en escala nominal; el valor siempre existe en los datos.</td>
+                                <td class="p-4 border-b border-gray-200">No tiene en cuenta los demás valores.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+            <footer class="text-center pt-8 mt-12 border-t border-gray-300">
+                <h2 class="text-3xl font-bold mb-4">Regla General</h2>
+                <p class="text-gray-700 text-lg max-w-3xl mx-auto mb-6">
+                    La relación entre estas tres medidas nos dice mucho sobre la simetría de la distribución.
+                </p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4 text-white">
+                    <div class="bg-primary rounded-lg shadow-lg p-6 w-full md:w-2/5">
+                        <h3 class="text-2xl font-bold mb-2">Distribución Simétrica</h3>
+                        <p class="text-lg">Media = Mediana = Moda</p>
+                    </div>
+                    <span class="text-3xl font-bold text-gray-500 transform rotate-90 md:rotate-0">→</span>
+                    <div class="bg-accent rounded-lg shadow-lg p-6 w-full md:w-2/5">
+                        <h3 class="text-2xl font-bold mb-2">Distribución Asimétrica</h3>
+                        <p class="text-lg">Media ≠ Mediana ≠ Moda</p>
+                    </div>
+                </div>
+            </footer>
+
+        </main>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                } else {
+                    return label;
+                }
+            };
+            
+            const commonOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#e5e7eb'
+                        }
+                    }
+                }
+            };
+
+            const ctxMedia = document.getElementById('mediaChart')?.getContext('2d');
+            if (ctxMedia) {
+                new Chart(ctxMedia, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Estudiante 1', 'Estudiante 2', 'Estudiante 3', 'Estudiante 4', 'Estudiante 5'],
+                        datasets: [{
+                            label: 'Tazas de Café por Semana',
+                            data: [21, 25, 10, 8, 11],
+                            backgroundColor: [
+                                '#007BFF',
+                                '#34C759',
+                                '#FF9500',
+                                '#FF3B30',
+                                '#004A99'
+                            ],
+                            borderColor: '#ffffff',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: commonOptions
+                });
+            }
+
+            const ctxModa = document.getElementById('modaChart')?.getContext('2d');
+            if (ctxModa) {
+                new Chart(ctxModa, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Daimler', 'BMW', 'VW', 'Audi'],
+                        datasets: [{
+                            label: 'Frecuencia de Marcas de Coche',
+                            data: [20, 25, 10, 15],
+                            backgroundColor: [
+                                '#007BFF',
+                                '#34C759',
+                                '#FF9500',
+                                '#FF3B30'
+                            ],
+                            borderColor: '#ffffff',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: commonOptions
+                });
+            }
+
+            const ctxComparative = document.getElementById('comparativeChart')?.getContext('2d');
+            if (ctxComparative) {
+                new Chart(ctxComparative, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [
+                            {
+                                label: 'Puntuación de Estudiante',
+                                data: [
+                                    {x: 1, y: 4}, {x: 2, y: 5}, {x: 3, y: 5}, {x: 4, y: 8}, {x: 5, y: 9},
+                                    {x: 6, y: 12}, {x: 7, y: 14}, {x: 8, y: 16}, {x: 9, y: 17}, {x: 10, y: 20}
+                                ],
+                                backgroundColor: '#007BFF',
+                                pointRadius: 7,
+                                pointHoverRadius: 9
+                            },
+                            {
+                                label: 'Media (11)',
+                                data: [{x: 0, y: 11}, {x: 11, y: 11}],
+                                type: 'line',
+                                borderColor: '#34C759',
+                                borderWidth: 3,
+                                fill: false,
+                                tension: 0.1,
+                                pointRadius: 0
+                            },
+                            {
+                                label: 'Mediana (10.5)',
+                                data: [{x: 0, y: 10.5}, {x: 11, y: 10.5}],
+                                type: 'line',
+                                borderColor: '#FF9500',
+                                borderWidth: 3,
+                                borderDash: [5, 5],
+                                fill: false,
+                                tension: 0.1,
+                                pointRadius: 0
+                            },
+                            {
+                                label: 'Moda (5)',
+                                data: [{x: 0, y: 5}, {x: 11, y: 5}],
+                                type: 'line',
+                                borderColor: '#FF3B30',
+                                borderWidth: 3,
+                                borderDash: [2, 2],
+                                fill: false,
+                                tension: 0.1,
+                                pointRadius: 0
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    title: (tooltipItems) => {
+                                        const item = tooltipItems[0];
+                                        if (item.datasetIndex === 0) {
+                                            return `Estudiante ${item.raw.x}`;
+                                        }
+                                        return item.dataset.label;
+                                    },
+                                    label: (tooltipItem) => {
+                                         if (tooltipItem.datasetIndex === 0) {
+                                            return `Puntuación: ${tooltipItem.raw.y}`;
+                                        }
+                                        return '';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                position: 'bottom',
+                                min: 0,
+                                max: 11,
+                                title: {
+                                    display: true,
+                                    text: 'Estudiantes'
+                                },
+                                grid: {
+                                    display: false
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Puntuación'
+                                },
+                                grid: {
+                                    color: '#e5e7eb'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>
